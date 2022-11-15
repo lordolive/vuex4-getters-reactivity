@@ -1,16 +1,16 @@
 
 <template>
-  <button @click="increment"> mapGetter read from the start: {{count1}}</button>
+  <button @click="increment"> getter read from the start: {{count1}}</button>
   <br />
   <br />
   <button v-if="!hasRegisteredModule" @click="registerModule">Register my module</button>
   <div v-if="hasRegisteredModule"> Module registered</div>
   <br />
-  <div v-if="hasRegisteredModule"> mapGetter first read after registration of module : {{count2}}</div>
+  <div v-if="hasRegisteredModule"> getter first read after registration of module : {{count2}}</div>
 </template>
 
 <script>
-import { mapGetters, mapMutations } from 'vuex';
+import { mapMutations } from 'vuex';
 import myDynamicModule from './store/dynamicModule.js';
 
 export default {
@@ -21,7 +21,12 @@ export default {
 		};
 	},
   computed: {
-    ...mapGetters({count1: 'count', count2: 'count'}),
+    count1() {
+      return this.$store.getters.count;
+    },
+    count2() {
+      return this.$store.getters.count;
+    }
   },
   methods: {
     ...mapMutations(['increment']),
